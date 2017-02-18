@@ -25,17 +25,17 @@ board.on('ready',function(){
 
     setTimeout(function(){
         move.turn('front_right');
-    },70000);
+    },75000);
 
     setTimeout(function(){
         move.turn('back_left');
-    },80000);
-
-    setTimeout(function(){
-        move.turn('back_right');
     },90000);
 
     setTimeout(function(){
+        move.turn('back_right');
+    },105000);
+
+    setTimeout(function(){
         move.stop();
-    },100000);
+    },120000);
 });
