@@ -95,6 +95,13 @@ move.turn = function(direction){
     }
 }
 
+move.stop = function(){
+    stop(wheel.front_left);
+    stop(wheel.front_right);
+    stop(wheel.back_left);
+    stop(wheel.back_right);
+}
+
 function start(wheel,status){
     status = status || true;
 

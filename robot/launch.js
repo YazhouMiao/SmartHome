@@ -30,4 +30,8 @@ board.on('ready',function(){
     setTimout(function(){
         move.turn('back_right');
     },90000);
+
+    setTimout(function(){
+        move.stop();
+    });
 });
