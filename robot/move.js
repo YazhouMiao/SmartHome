@@ -103,7 +103,7 @@ move.stop = function(){
 }
 
 function start(wheel,status){
-    status = status || true;
+    status = status || false;
 
     if(status){
         wheel.plus.high();
