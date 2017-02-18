@@ -15,27 +15,27 @@ board.on('ready',function(){
 
     move.forward();
 
-    setTimout(function(){
+    setTimeout(function(){
         move.back();
     },30000);
 
-    setTimout(function(){
+    setTimeout(function(){
         move.turn('front_left');
     },60000);
 
-    setTimout(function(){
+    setTimeout(function(){
         move.turn('front_right');
     },70000);
 
-    setTimout(function(){
+    setTimeout(function(){
         move.turn('back_left');
     },80000);
 
-    setTimout(function(){
+    setTimeout(function(){
         move.turn('back_right');
     },90000);
 
-    setTimout(function(){
+    setTimeout(function(){
         move.stop();
-    });
+    },100000);
 });
