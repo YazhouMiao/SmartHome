@@ -19,6 +19,7 @@ board.on('ready',function(){
 
     setTimeout(function(){
         clearInterval(val);
+        pin.low();
         console.log('cleared');
-    },10000);
+    },60000);
 });
