@@ -8,11 +8,13 @@ var board = new five.Board({
 board.on('ready',function(){
     var pin = new five.Pin('P1-7');
 
+    var counter = 0;
     var val = setInterval(function(){
-        pin.query(function(status){
-            pin.write(!status);
-            console.log(status);
-        });
+        if(counter % 2 == 0){
+            pin.high();
+        } else {
+            pin.low();
+        }
     },2000);
 
     setTimeout(function(){

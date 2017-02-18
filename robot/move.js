@@ -99,11 +99,11 @@ function start(wheel,status){
     status = status || true;
 
     if(status){
-        wheel.plus.hight();
+        wheel.plus.high();
         wheel.minus.low();
     } else {
         wheel.plus.low();
-        wheel.minus.hight();
+        wheel.minus.high();
     }
 }
 
