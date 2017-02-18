@@ -11,10 +11,12 @@ board.on('ready',function(){
     var val = setInterval(function(){
         pin.query(function(status){
             pin.write(!status);
+            console.log(status);
         });
     },2000);
 
     setTimeout(function(){
         clearInterval(val);
+        console.log('cleared');
     },10000);
 });
