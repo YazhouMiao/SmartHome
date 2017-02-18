@@ -3,3 +3,31 @@
  * SmartHome 硬件启动程序
  */
 
+var five = require('johnny-five');
+var move = require('./move');
+
+var board = five.Board();
+board.on('ready',function(){
+
+    move.forward();
+
+    setTimout(function(){
+        move.back();
+    },30000);
+
+    setTimout(function(){
+        move.turn('front_left');
+    },60000);
+
+    setTimout(function(){
+        move.turn('front_right');
+    },70000);
+
+    setTimout(function(){
+        move.turn('back_left');
+    },80000);
+
+    setTimout(function(){
+        move.turn('back_right');
+    },90000);
+});
