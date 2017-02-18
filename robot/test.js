@@ -15,6 +15,8 @@ board.on('ready',function(){
         } else {
             pin.low();
         }
+
+        counter++;
     },2000);
 
     setTimeout(function(){
