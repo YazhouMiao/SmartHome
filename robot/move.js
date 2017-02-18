@@ -9,23 +9,23 @@ var five = require('johnny-five');
 var wheels = {
     // 左前轮
     front_left: {
-        plus: new five.Pin(31), // 正
-        minus: new five.Pin(32), // 负
-    },
-    // 右前轮
-    front_right: {
-        plus: new five.Pin(33), // 正
-        minus: new five.Pin(35), // 负
+        plus: new five.Pin('P1-29'), // 正
+        minus: new five.Pin('P1-31'), // 负
     },
     // 左后轮
     back_left: {
-        plus: new five.Pin(36), // 正
-        minus: new five.Pin(37), // 负
+        plus: new five.Pin('P1-29'), // 正
+        minus: new five.Pin('P1-31'), // 负
+    },
+    // 右前轮
+    front_right: {
+        plus: new five.Pin('P1-36'), // 正
+        minus: new five.Pin('P1-37'), // 负
     },
     // 右后轮
     back_right: {
-        plus: new five.Pin(38), // 正
-        minus: new five.Pin(40), // 负
+        plus: new five.Pin('P1-36'), // 正
+        minus: new five.Pin('P1-37'), // 负
     }
 }
 
