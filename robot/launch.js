@@ -4,9 +4,13 @@
  */
 
 var five = require('johnny-five');
+var Raspi = require('raspi-io');
 var move = require('./move');
 
-var board = five.Board();
+var board = new five.Board({
+    io: new Raspi()
+});
+
 board.on('ready',function(){
 
     move.forward();
