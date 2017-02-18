@@ -6,7 +6,7 @@ var board = new five.Board({
 });
 
 board.on('ready',function(){
-    var pin = new five.Pin(7);
+    var pin = new five.Pin('P1-7');
 
     var val = setInterval(function(){
         pin.query(function(status){
