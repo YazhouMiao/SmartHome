@@ -17,25 +17,25 @@ board.on('ready',function(){
 
     setTimeout(function(){
         move.back();
-    },30000);
+    },10000);
 
     setTimeout(function(){
         move.turn('front_left');
-    },60000);
+    },20000);
 
     setTimeout(function(){
         move.turn('front_right');
-    },75000);
+    },35000);
 
     setTimeout(function(){
         move.turn('back_left');
-    },90000);
+    },50000);
 
     setTimeout(function(){
         move.turn('back_right');
-    },105000);
+    },65000);
 
     setTimeout(function(){
         move.stop();
-    },120000);
+    },80000);
 });
