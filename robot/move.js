@@ -3,7 +3,7 @@
  * 封装机器人的移动操作(前进、停止、转弯、后退等)
  */
 
-var five = require('johnny-five');
+var Gpio = require('onoff').Gpio;
 
 // 轮子
 var wheels = {
