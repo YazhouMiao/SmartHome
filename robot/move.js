@@ -73,7 +73,7 @@ Move.prototype.turn = function(direction){
             this.back_right.forward();
 
             this.emit('front_left');
-            return;
+            break;
         case 'front_right':
             // 右前方向转弯
             this.front_right.stop();
@@ -83,7 +83,7 @@ Move.prototype.turn = function(direction){
             this.back_left.forward();
 
             this.emit('front_right');
-            return;
+            break;
         case 'back_left':
             // 左后方向转弯
             this.front_left.stop();
@@ -93,17 +93,17 @@ Move.prototype.turn = function(direction){
             this.back_right.back();
 
             this.emit('back_left');
-            return;
+            break;
         case 'back_right':
-            // 左后方向转弯
+            // 右后方向转弯
             this.front_right.stop();
             this.back_right.stop();
 
             this.front_left.back();
-            this.back_left.stop();
+            this.back_left.back();
 
             this.emit('back_right');
-            return;
+            break;
         default:
             this.emit('error', new Error('The right direction is needed!'));
     }
