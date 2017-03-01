@@ -30,10 +30,10 @@ util.inherits(Move,EventEmitter);
 // 前进
 Move.prototype.forward = function(){
     // 四轮向前驱动
-    Wheels.front_left.forward();
-    Wheels.front_right.forward();
-    Wheels.back_left.forward();
-    Wheels.back_right.forward();
+    this.front_left.forward();
+    this.front_right.forward();
+    this.back_left.forward();
+    this.back_right.forward();
 
     this.emit('forward');
 }
@@ -41,20 +41,20 @@ Move.prototype.forward = function(){
 // 后退
 Move.prototype.back = function(){
     // 四轮向后驱动
-    Wheels.front_left.back();
-    Wheels.front_right.back();
-    Wheels.back_left.back();
-    Wheels.back_right.back();
+    this.front_left.back();
+    this.front_right.back();
+    this.back_left.back();
+    this.back_right.back();
 
     this.emit('back');
 }
 
 // 停车
 Move.prototype.stop = function(){
-    Wheels.front_left.stop();
-    Wheels.front_right.stop();
-    Wheels.back_left.stop();
-    Wheels.back_right.stop();
+    this.front_left.stop();
+    this.front_right.stop();
+    this.back_left.stop();
+    this.back_right.stop();
 
     this.emit('stopp');
 }
@@ -66,41 +66,41 @@ Move.prototype.turn = function(direction){
     switch (direction) {
         case 'front_left':
             // 左前方向转弯
-            Wheels.front_left.stop();
-            Wheels.back_left.stop();
+            this.front_left.stop();
+            this.back_left.stop();
 
-            Wheels.front_right.forward();
-            Wheels.back_right.forward();
+            this.front_right.forward();
+            this.back_right.forward();
 
             this.emit('front_left');
             return;
         case 'front_right':
             // 右前方向转弯
-            Wheels.front_right.stop();
-            Wheels.back_right.stop();
+            this.front_right.stop();
+            this.back_right.stop();
 
-            Wheels.front_left.forward();
-            Wheels.back_left.forward();
+            this.front_left.forward();
+            this.back_left.forward();
 
             this.emit('front_right');
             return;
         case 'back_left':
             // 左后方向转弯
-            Wheels.front_left.stop();
-            Wheels.back_left.stop();
+            this.front_left.stop();
+            this.back_left.stop();
 
-            Wheels.front_right.back();
-            Wheels.back_right.back();
+            this.front_right.back();
+            this.back_right.back();
 
             this.emit('back_left');
             return;
         case 'back_right':
             // 左后方向转弯
-            Wheels.front_right.stop();
-            Wheels.back_right.stop();
+            this.front_right.stop();
+            this.back_right.stop();
 
-            Wheels.front_left.back();
-            Wheels.back_left.stop();
+            this.front_left.back();
+            this.back_left.stop();
 
             this.emit('back_right');
             return;
