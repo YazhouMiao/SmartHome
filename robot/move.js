@@ -19,7 +19,7 @@ function Move(wheels){
         this.front_left = new Wheel(wheels.front_left.plus,wheels.front_left.minus);
         this.back_left = new Wheel(wheels.back_left.plus,wheels.back_left.minus);
         this.front_right = new Wheel(wheels.front_right.plus,wheels.front_right.minus);
-        this.back_right = new Wheel(wheels.front_right.plus,wheels.front_right.minus);
+        this.back_right = new Wheel(wheels.back_right.plus,wheels.back_right.minus);
     }catch(err){
         this.emit('error',err);
     }
