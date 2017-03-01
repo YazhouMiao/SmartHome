@@ -7,38 +7,22 @@
 exports.wheels = {
     // 左前轮
     front_left: {
-        plus: {// 正
-            gpio: 16,
-        },
-        minus: {// 负
-            gpio: 19,
-        },
+        plus: 16,// 正
+        minus: 19,// 负
     },
     // 左后轮
     back_left: {
-        plus: {// 正
-            gpio: 16,
-        },
-        minus: {// 负
-            gpio: 19,
-        },
+        plus: 16,// 正
+        minus: 19,// 负
     },
     // 右前轮
     front_right: {
-        plus: {// 正
-            gpio: 20,
-        },
-        minus: {// 负
-            gpio: 26,
-        },
+        plus: 20,// 正
+        minus: 26,// 负
     },
     // 右后轮
     back_right: {
-        plus: {// 正
-            gpio: 20,
-        },
-        minus: {// 负
-            gpio: 26
-        },
+        plus: 20,// 正
+        minus: 26,// 负
     }
 }

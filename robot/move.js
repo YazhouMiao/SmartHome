@@ -5,19 +5,19 @@
 
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
-var Wheel = require('./Wheel');
+var Wheel = require('./wheel');
 var wheelConfig = require('./config').wheels;
 
 // 轮子
 var Wheels = {
     // 左前轮
-    front_left: new Wheel(wheelConfig.front_left.gpio),
+    front_left: new Wheel(wheelConfig.front_left.plus,wheelConfig.front_left.minus),
     // 左后轮
-    back_left: new Wheel(wheelConfig.back_left.gpio),
+    back_left: new Wheel(wheelConfig.back_left.plus,wheelConfig.back_left.minus),
     // 右前轮
-    front_right: new Wheel(wheelConfig.front_right.gpio),
+    front_right: new Wheel(wheelConfig.front_right.plus,wheelConfig.front_right.minus),
     // 右后轮
-    back_right: new Wheel(wheelConfig.back_right.gpio),
+    back_right: new Wheel(wheelConfig.back_right.plus,wheelConfig.back_right.minus),
 }
 
 var move = {};
