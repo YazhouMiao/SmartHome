@@ -3,52 +3,57 @@
  * 封装机器人的移动操作(前进、停止、转弯、后退等)
  */
 
-var Gpio = require('onoff').Gpio;
+var util = require('util');
+var EventEmitter = require('events').EventEmitter;
+var Wheel = require('./Wheel');
+var wheelConfig = require('./config').wheels;
 
 // 轮子
-var wheels = {
+var Wheels = {
     // 左前轮
-    front_left: {
-        plus: new five.Pin('P1-29'), // 正
-        minus: new five.Pin('P1-31'), // 负
-    },
+    front_left: new Wheel(wheelConfig.front_left.gpio),
     // 左后轮
-    back_left: {
-        plus: new five.Pin('P1-29'), // 正
-        minus: new five.Pin('P1-31'), // 负
-    },
+    back_left: new Wheel(wheelConfig.back_left.gpio),
     // 右前轮
-    front_right: {
-        plus: new five.Pin('P1-36'), // 正
-        minus: new five.Pin('P1-37'), // 负
-    },
+    front_right: new Wheel(wheelConfig.front_right.gpio),
     // 右后轮
-    back_right: {
-        plus: new five.Pin('P1-36'), // 正
-        minus: new five.Pin('P1-37'), // 负
-    }
+    back_right: new Wheel(wheelConfig.back_right.gpio),
 }
 
 var move = {};
 
+util.inherits(move,EventEmitter);
+
 // 前进
 move.forward = function(){
     // 四轮向前驱动
-    start(wheels.front_left);
-    start(wheels.front_right);
+    Wheels.front_left.forward();
+    Wheels.front_right.forward();
+    Wheels.back_left.forward();
+    Wheels.back_right.forward();
 
-    start(wheels.back_left);
-    start(wheels.back_right);
+    move.emit('forward');
 }
 
 // 后退
 move.back = function(){
     // 四轮向后驱动
-    start(wheels.front_left,false);
-    start(wheels.front_right,false);
+    Wheels.front_left.back();
+    Wheels.front_right.back();
+    Wheels.back_left.back();
+    Wheels.back_right.back();
 
-    start(wheels.back_left,false);
-    start(wheels.back_right,false);
+    move.emit('back');
+}
+
+// 停车
+move.stop = function(){
+    Wheels.front_left.stop();
+    Wheels.front_right.stop();
+    Wheels.back_left.stop();
+    Wheels.back_right.stop();
+
+    move.emit('stopp');
 }
 
 // 转弯
@@ -58,65 +63,47 @@ move.turn = function(direction){
     switch (direction) {
         case 'front_left':
             // 左前方向转弯
-            stop(wheels.front_left);
-            stop(wheels.back_left);
+            Wheels.front_left.stop();
+            Wheels.back_left.stop();
 
-            start(wheels.front_right);
-            start(wheels.back_right);
+            Wheels.front_right.forward();
+            Wheels.back_right.forward();
 
+            move.emit('front_left');
             return;
         case 'front_right':
             // 右前方向转弯
-            stop(wheels.front_right);
-            stop(wheels.back_right);
+            Wheels.front_right.stop();
+            Wheels.back_right.stop();
 
-            start(wheels.front_left);
-            start(wheels.back_left);
+            Wheels.front_left.forward();
+            Wheels.back_left.forward();
 
+            move.emit('front_right');
             return;
         case 'back_left':
             // 左后方向转弯
-            stop(wheels.front_left);
-            stop(wheels.back_left);
+            Wheels.front_left.stop();
+            Wheels.back_left.stop();
 
-            start(wheels.front_right,false);
-            start(wheels.back_right,false);
+            Wheels.front_right.back();
+            Wheels.back_right.back();
 
+            move.emit('back_left');
             return;
         case 'back_right':
             // 左后方向转弯
-            stop(wheels.front_right);
-            stop(wheels.back_right);
+            Wheels.front_right.stop();
+            Wheels.back_right.stop();
 
-            start(wheels.front_left,false);
-            start(wheels.back_left,false);
+            Wheels.front_left.back();
+            Wheels.back_left.stop();
 
+            move.emit('back_right');
             return;
+        default:
+            move.emit('error', new Error('The right direction is needed!'));
     }
-}
-
-move.stop = function(){
-    stop(wheels.front_left);
-    stop(wheels.front_right);
-    stop(wheels.back_left);
-    stop(wheels.back_right);
-}
-
-function start(wheel,status){
-    status = status || false;
-
-    if(status){
-        wheel.plus.high();
-        wheel.minus.low();
-    } else {
-        wheel.plus.low();
-        wheel.minus.high();
-    }
-}
-
-function stop(wheel){
-    wheel.plus.low();
-    wheel.minus.low();
 }
 
 module.exports = move;
