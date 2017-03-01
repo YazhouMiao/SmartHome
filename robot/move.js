@@ -8,56 +8,59 @@ var EventEmitter = require('events').EventEmitter;
 var Wheel = require('./wheel');
 var wheelConfig = require('./config').wheels;
 
-// 轮子
-var Wheels = {
-    // 左前轮
-    front_left: new Wheel(wheelConfig.front_left.plus,wheelConfig.front_left.minus),
-    // 左后轮
-    back_left: new Wheel(wheelConfig.back_left.plus,wheelConfig.back_left.minus),
-    // 右前轮
-    front_right: new Wheel(wheelConfig.front_right.plus,wheelConfig.front_right.minus),
-    // 右后轮
-    back_right: new Wheel(wheelConfig.back_right.plus,wheelConfig.back_right.minus),
+/*
+ * 机器人驱动类
+ */
+function Move(wheels){
+    wheels = wheels || wheelConfig;
+
+    // 初始化四个轮子
+    try{
+        this.front_left = new Wheel(wheels.front_left.plus,wheels.front_left.minus);
+        this.back_left = new Wheel(wheels.back_left.plus,wheels.back_left.minus);
+        this.front_right = new Wheel(wheels.front_right.plus,wheels.front_right.minus);
+        this.back_right = new Wheel(wheels.front_right.plus,wheels.front_right.minus);
+    }catch(err){
+        this.emit('error',err);
+    }
 }
 
-var move = {};
-
-util.inherits(move,EventEmitter);
+util.inherits(Move,EventEmitter);
 
 // 前进
-move.forward = function(){
+Move.prototype.forward = function(){
     // 四轮向前驱动
     Wheels.front_left.forward();
     Wheels.front_right.forward();
     Wheels.back_left.forward();
     Wheels.back_right.forward();
 
-    move.emit('forward');
+    this.emit('forward');
 }
 
 // 后退
-move.back = function(){
+Move.prototype.back = function(){
     // 四轮向后驱动
     Wheels.front_left.back();
     Wheels.front_right.back();
     Wheels.back_left.back();
     Wheels.back_right.back();
 
-    move.emit('back');
+    this.emit('back');
 }
 
 // 停车
-move.stop = function(){
+Move.prototype.stop = function(){
     Wheels.front_left.stop();
     Wheels.front_right.stop();
     Wheels.back_left.stop();
     Wheels.back_right.stop();
 
-    move.emit('stopp');
+    this.emit('stopp');
 }
 
 // 转弯
-move.turn = function(direction){
+Move.prototype.turn = function(direction){
     direction = direction || 'front_left';
 
     switch (direction) {
@@ -69,7 +72,7 @@ move.turn = function(direction){
             Wheels.front_right.forward();
             Wheels.back_right.forward();
 
-            move.emit('front_left');
+            this.emit('front_left');
             return;
         case 'front_right':
             // 右前方向转弯
@@ -79,7 +82,7 @@ move.turn = function(direction){
             Wheels.front_left.forward();
             Wheels.back_left.forward();
 
-            move.emit('front_right');
+            this.emit('front_right');
             return;
         case 'back_left':
             // 左后方向转弯
@@ -89,7 +92,7 @@ move.turn = function(direction){
             Wheels.front_right.back();
             Wheels.back_right.back();
 
-            move.emit('back_left');
+            this.emit('back_left');
             return;
         case 'back_right':
             // 左后方向转弯
@@ -99,11 +102,11 @@ move.turn = function(direction){
             Wheels.front_left.back();
             Wheels.back_left.stop();
 
-            move.emit('back_right');
+            this.emit('back_right');
             return;
         default:
-            move.emit('error', new Error('The right direction is needed!'));
+            this.emit('error', new Error('The right direction is needed!'));
     }
 }
 
-module.exports = move;
+module.exports = Move;
