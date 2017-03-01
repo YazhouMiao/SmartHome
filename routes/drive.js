@@ -7,11 +7,11 @@ var Move = require('../robot/move');
 var move = new Move();
 
 router.get('/',function(req,res,next){
-    res.send('drive page');
+    res.render('drive');
 });
 
 router.post('/',function(req,res,next){
-    switch(req.params.opt){
+    switch(req.param('opt')){
         case 'forward':
             move.forward();
             res.json({errcode:0});
