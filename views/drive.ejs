@@ -2,108 +2,46 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-  <meta content="yes" name="apple-mobile-web-app-capable">
-  <meta content="black" name="apple-mobile-web-app-status-bar-style">
-  <meta content="telephone=no" name="format-detection">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>机器人手控系统</title>
+  <link rel="stylesheet" type="text/css" href="/bootstrap-3.3.7/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="/bootstrap-3.3.7/css/bootstrap-theme.min.css" />
   <link rel="stylesheet" type="text/css" href="/stylesheets/style.css" />
-  <script src="/js/jquery-1.9.1.min.js"></script>
 </head>
 <body>
-<div class="content" style="width: 100%;margin: 20px 10px;">
-  <button id="forward" style="width: 30%;height:70px">前进</button>
-  <button id="back" style="width: 30%;height:70px">后退</button>
-  <button id="stop" style="width: 30%;height:70px">停止</button>
-</div>
-<div class="content" style="width: 100%;margin: 20px 10px;">
-  <button id="front_left" style="width: 40%;height:70px">左前转弯</button>
-  <button id="back_left" style="width: 40%;height:70px">左后转弯</button>
-</div>
-<div class="content" style="width: 100%;margin: 20px 10px;">
-  <button id="front_right" style="width: 40%;height:70px">右前转弯</button>
-  <button id="back_right" style="width: 40%;height:70px">右后转弯</button>
-</div>
+  <div class="container">
+    <div class="opt-content opt-title alert alert-success"><h3>机器人手控系统</h3></div>
+    <div class="opt-content">
+      <div class="col-xs-6"><button data-opt="forward" class="btn btn-primary opt-btn">前进</button></div>
+      <div class="col-xs-6"><button data-opt="back" class="btn btn-primary opt-btn">后退</button></div>
+    </div>
+    <div class="opt-content">
+      <div class="col-xs-6"><button data-opt="front_left" class="btn btn-success opt-btn">左前转弯</button></div>
+      <div class="col-xs-6"><button data-opt="back_left" class="btn btn-success opt-btn">左后转弯</button></div>
+    </div>
+    <div class="opt-content">
+      <div class="col-xs-6"><button data-opt="front_right" class="btn btn-warning opt-btn">右前转弯</button></div>
+      <div class="col-xs-6"><button data-opt="back_right" class="btn btn-warning opt-btn">右后转弯</button></div>
+    </div>
+    <div class="opt-content">
+      <div class="col-xs-12"><button data-opt="stop" class="btn btn-danger opt-btn">停止</button></div>
+    </div>
+  </div>
+<script src="/js/jquery-1.9.1.min.js"></script>
+<script src="/bootstrap-3.3.7/js/bootstrap.min.js"></script>
 <script>
-  $('#forward').on('click',function(){
+  $('.opt-btn').on('click',function(){
+    var self = this;
     $.ajax({
       url: '/drive',
       type: 'post',
-      data: {opt:'forward'},
+      data: {opt:$(self).data('opt')},
       dataType: 'json',
       success: function(data){
+        $('.opt-btn').removeAttr('disabled');
+        $(self).attr('disabled','true');
         console.log(data.errcode); 
-      }
-    });
-  });
-
-  $('#back').on('click',function(){
-    $.ajax({
-      url: '/drive',
-      type: 'post',
-      data: {opt:'back'},
-      dataType: 'json',
-      success: function(data){
-        console.log(data.errcode);
-      }
-    });
-  });
-
-  $('#stop').on('click',function(){
-    $.ajax({
-      url: '/drive',
-      type: 'post',
-      data: {opt:'stop'},
-      dataType: 'json',
-      success: function(data){
-        console.log(data.errcode);
-      }
-    });
-  });
-
-  $('#front_left').on('click',function(){
-    $.ajax({
-      url: '/drive',
-      type: 'post',
-      data: {opt:'front_left'},
-      dataType: 'json',
-      success: function(data){
-        console.log(data.errcode);
-      }
-    });
-  });
-
-  $('#front_right').on('click',function(){
-    $.ajax({
-      url: '/drive',
-      type: 'post',
-      data: {opt:'front_right'},
-      dataType: 'json',
-      success: function(data){
-        console.log(data.errcode);
-      }
-    });
-  });
-
-  $('#back_left').on('click',function(){
-    $.ajax({
-      url: '/drive',
-      type: 'post',
-      data: {opt:'back_left'},
-      dataType: 'json',
-      success: function(data){
-        console.log(data.errcode);
-      }
-    });
-  });
-
-  $('#back_right').on('click',function(){
-    $.ajax({
-      url: '/drive',
-      type: 'post',
-      data: {opt:'back_right'},
-      dataType: 'json',
-      success: function(data){
-        console.log(data.errcode);
       }
     });
   });
