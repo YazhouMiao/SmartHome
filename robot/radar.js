@@ -2,27 +2,47 @@
  * Created by admin on 2017/3/7.
  * 超声波雷达测距相关操作
  */
-var Gpio = require('onoff').Gpio;
+var rpio = require('rpio');
 var radarConfig = require('./config').radar;
+
+rpio.init({mapping: 'gpio'});
 
 function Radar(radarConfig){
     var radarConfig = radarConfig || {};
-    this.trigger = new Gpio(radarConfig.trigger,'out');
-    this.receiver = new Gpio(radarConfig.receiver,'in','both');
+    this.trigger = radarConfig.trigger;
+    this.receiver = radarConfig.receiver;
     this.times = radarConfig.times;
+
+    rpio.open(this.trigger, rpio.OUTPUT, rpio.LOW);
+    rpio.open(this.receiver, rpio.INPUT);
 }
 
 Radar.prototype.detect = function(){
-    var flag = true,counter = 0,start;
+    var flag = true,
+        difftime = 0,
+        proStart,
 
-    this.trigger.writeSync(1);
-    this.trigger.writeSync(0);
+    rpio.write(this.trigger, rpio.HIGH);
+    rpio.usleep(10);
+    rpio.write(this.trigger, rpio.LOW);
 
+    proStart = process.hrtime();
     while(true){
-        if(this.receiver.readSync()){
-
+        if(flag && rpio.read(this.receiver)){
+            flag = false;
+            start = process.hrtime();
         }
+
+        if(!flag && !rpio.read(this.receiver)){
+            let hrtime = process.hrtime(start);
+            difftime = hrtime[0] * 1e6 + hrtime[1] / 1e3; // 时间差(us)
+            break;
+        }
+
+        if(process.hrtime(proStart)[0] > 5) break;
     }
+
+    console.log(1e6 / 34321 * difftime);
 }
 
 

@@ -29,7 +29,7 @@ exports.wheels = {
 
 // 超声波
 exports.radar = {
-    trigger: 11,    // 触发GPIO引脚
-    receiver: 12,   // 接收GPIO引脚
+    trigger: 12,    // 触发GPIO引脚
+    receiver: 13,   // 接收GPIO引脚
     frequence: 10,  // 每次有效测量的频率
 }
