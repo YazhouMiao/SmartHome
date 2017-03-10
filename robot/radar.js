@@ -18,32 +18,33 @@ function Radar(radarConfig){
 }
 
 Radar.prototype.detect = function(){
-    var flag = true,
+    var flag = true,counter=0,hrtime=[0,0],
         difftime = 0,
-        proStart,
+        proStart;
 
+    rpio.msleep(30);
     rpio.write(this.trigger, rpio.HIGH);
     rpio.usleep(10);
     rpio.write(this.trigger, rpio.LOW);
 
-    proStart = process.hrtime();
     while(true){
+
         if(flag && rpio.read(this.receiver)){
-            flag = false;
             start = process.hrtime();
+            flag = false;
         }
 
         if(!flag && !rpio.read(this.receiver)){
-            let hrtime = process.hrtime(start);
-            difftime = hrtime[0] * 1e6 + hrtime[1] / 1e3; // 时间差(us)
+            hrtime = process.hrtime(start);
             break;
         }
 
-        if(process.hrtime(proStart)[0] > 5) break;
+        counter++;
+        if(counter >= 100000) break;
     }
 
-    console.log(1e6 / 34321 * difftime);
+    return (34321 * hrtime[1] * 0.5 / 1e9);
 }
 
 
-
+module.exports = Radar;
